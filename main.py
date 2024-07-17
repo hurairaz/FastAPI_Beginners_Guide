@@ -26,18 +26,27 @@ class UpdateStudent(BaseModel):
 # Root endpoint
 @app.get("/")
 def read_root():
+    """
+    Root endpoint that returns a welcome message.
+    """
     return {"message": "Welcome to the Student Management System!"}
 
 
 # Get all students
 @app.get("/all-student")
 def all_student():
+    """
+    Endpoint to retrieve all student records.
+    """
     return students
 
 
 # Get a specific student by ID
 @app.get("/read-student/{student_id}")
 def read_student(student_id: int):
+    """
+    Endpoint to retrieve a specific student record by student ID.
+    """
     if student_id in students:
         return students[student_id]
     else:
@@ -47,6 +56,9 @@ def read_student(student_id: int):
 # Query a student by name
 @app.get("/query-student")
 def query_student(name: Optional[str] = None):
+    """
+    Endpoint to query a student record by name.
+    """
     if name is not None:
         for student_id, info in students.items():
             if info["name"] == name:
@@ -59,6 +71,9 @@ def query_student(name: Optional[str] = None):
 # Create a new student
 @app.post("/write-student/{student_id}")
 def write_student(student_id: int, student: Student):
+    """
+    Endpoint to create a new student record.
+    """
     if student_id in students:
         return {"message": "Student record already exists"}
     else:
@@ -69,6 +84,9 @@ def write_student(student_id: int, student: Student):
 # Update a student
 @app.put("/update-student/{student_id}")
 def update_student(student_id: int, student: UpdateStudent):
+    """
+    Endpoint to update an existing student record.
+    """
     if student_id not in students:
         return {"message": "Student record does not exist"}
 
@@ -83,6 +101,9 @@ def update_student(student_id: int, student: UpdateStudent):
 # Delete a student
 @app.delete("/delete-student/{student_id}")
 def delete_student(student_id: int):
+    """
+    Endpoint to delete a student record by student ID.
+    """
     if student_id not in students:
         return {"message": "No student record with the provided ID exists"}
 
